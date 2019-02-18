@@ -1,0 +1,92 @@
+{
+  "id": "406d2390-85fc-4750-b5fc-d2564ee45905",
+  "name": "apioperations",
+  "friendlyName": "Terraform Enterprise API Integration",
+  "description": "HashiCorp Terraform Enterprise integration for Azure DevOps",
+  "author": "rhall@hashicorp.com",
+  "helpMarkDown": "Terraform Enterprise (TFE) provides a central interface for running Terraform within a large collaborative organization.",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "1",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Terraform Enterprise Integration",
+  "inputs": [
+    {
+      "name": "tfe_host",
+      "type": "string",
+      "label": "Hostname",
+      "defaultValue": "app.terraform.io",
+      "required": true,
+      "helpMarkDown": "The remote backend hostname to connect to. Defaults to app.terraform.io. If you are running a private instance of Terraform Enterprise on-premises you will need to provide the FQDN for the private instance (i.e. server.example.com)."
+    },
+    {
+      "name": "tfe_token",
+      "type": "string",
+      "label": "Access Token",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The token used to authenticate with the Terraform Enterprise remote backend."
+    },
+    {
+      "name": "tfe_workspace",
+      "type": "string",
+      "label": "Workspace Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The full name of a the Terraform Enterprise remote workspace."
+    },
+    {
+      "name": "tfe_workspace_spec",
+      "type": "boolean",
+      "label": "Create new workspace",
+      "defaultValue": "true",
+      "required": true,
+      "helpMarkDown": "Enabling this checkbox will create a new workspace based on the value that has been specified in the Workspace Name parameter."
+    },
+    {
+      "name": "tfe_organization",
+      "type": "string",
+      "label": "Organization Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the organization containing the targeted workspace."
+    },
+    {
+      "name": "tfe_variables",
+      "type": "multiLine",
+      "label": "Terraform Variables",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The variable block configures a input variables for a Terraform deployment. Each block declares a single variable and if the 'Set Terraform Variables' checkbox is enabled, all variable blocks will be written to a *.tf file in the template directory."
+    },
+    {
+      "name": "tfe_variables_spec",
+      "type": "boolean",
+      "label": "Set Terraform Variables",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Enabling this checkbox will create a dynamic Terraform variables file based on the values written to the Terraform Variables parameter."
+    },
+    {
+      "name": "tfe_template_path",
+      "type": "filePath",
+      "label": "Template Directory",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Current working directory where Terraform templates are stored."
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run.ps1"
+    }
+  }
+}

@@ -112,9 +112,10 @@ function Get-TerraformWorkspace {
 #>
 
 function New-TerraformWorkspace {
+
     [CmdletBinding()]
     [Alias()]
-    [OutputType([PSCustomObject])]
+    [OutputType([object])]
     Param
     (
 
@@ -137,6 +138,7 @@ function New-TerraformWorkspace {
                    ValueFromPipelineByPropertyName=$true,
                    Position=3)]
         $Token
+
 
     )
 
@@ -168,35 +170,107 @@ function New-TerraformWorkspace {
             Method      = 'Post'
             Body        = $Json
             ErrorAction = 'stop'
+            OutVariable   = 'PTW'
+            ErrorVariable = 'errPTW'
     
         }
+
+        $Get = @{
+
+            Uri           = "https://$Hostname/api/v2/organizations/$Organization/workspaces/$WorkSpaceName"
+            Headers       = @{"Authorization" = "Bearer $Token" } 
+            ContentType   = 'application/vnd.api+json'
+            Method        = 'Get'
+            ErrorAction   = 'stop'
+            OutVariable   = 'GTW'
+            ErrorVariable = 'errGTW'
+    
+        }
+
     }
     Process
     {
+
         try
         {
-
-            Return (Invoke-RestMethod @Post).data
+            
+            Write-Host "$($MyInvocation.MyCommand.Name): Getting workspace configuration"
+        
+            Invoke-RestMethod @Get
 
         }
         catch
         {
-            $ErrorID = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.status
-            $Message = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.detail
-            $Exception = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.title
-            
-            Write-Error -Exception $Exception -Message $Message -ErrorId $ErrorID
+        
+            Write-Error "$($MyInvocation.MyCommand.Name): Error encountered while attempting to get workspace configuration"        
+        
         }
         finally
         {
+        
+            Write-Host "$($MyInvocation.MyCommand.Name): Get workspace configuration finished"
+        
+        }
 
-            Write-Host "$($MyInvocation.MyCommand.Name): Script execution complete"
+        if($errGTW)
+        {
+            
+            [int]$Status = ($errGTW.message | convertfrom-json).errors.status
+
+            If($Status -eq 404)
+            {
+
+                try
+                {
+                    
+                    Write-Host "$($MyInvocation.MyCommand.Name): Creating remote workspace"
+
+                    Invoke-RestMethod @Post
+
+                }
+                catch
+                {
+
+                    Write-Error "$($MyInvocation.MyCommand.Name): Error encountered while attempting to create the remote workspace" 
+
+                }
+                finally
+                {
+
+                    Write-Host "$($MyInvocation.MyCommand.Name): Create workspace finished"
+                    
+                }
+
+                
+                if($PTW)
+                {
+                
+                    Return $PTW.data
+                                
+                }
+
+            }
+            else
+            {
+
+                Write-Error "$($MyInvocation.MyCommand.Name): Unknown Error - $($errGTW.message)"
+
+            }               
+    
+        }
+        else
+        {
+
+            Return $GTW.data
 
         }
 
     }
     End
     {
+
+        Write-Host "$($MyInvocation.MyCommand.Name): Script execution complete"
+
     }
 }
 

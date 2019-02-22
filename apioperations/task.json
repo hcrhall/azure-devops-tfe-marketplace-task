@@ -44,14 +44,6 @@
       "helpMarkDown": "The full name of a the Terraform Enterprise remote workspace."
     },
     {
-      "name": "tfe_workspace_spec",
-      "type": "boolean",
-      "label": "Create new workspace",
-      "defaultValue": "true",
-      "required": true,
-      "helpMarkDown": "Enabling this checkbox will create a new workspace based on the value that has been specified in the Workspace Name parameter."
-    },
-    {
       "name": "tfe_organization",
       "type": "string",
       "label": "Organization Name",

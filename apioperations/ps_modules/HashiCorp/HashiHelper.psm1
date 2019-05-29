@@ -77,11 +77,8 @@ function Get-TerraformWorkspace {
         }
         catch
         {
-            $ErrorID = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.status
-            $Message = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.detail
-            $Exception = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.title
-            
-            Write-Error -Exception $Exception -Message $Message -ErrorId $ErrorID
+
+            throw
 
         }
         finally
@@ -202,8 +199,8 @@ function New-TerraformWorkspace {
         catch
         {
         
-            Write-Error "$($MyInvocation.MyCommand.Name): Error encountered while attempting to get workspace configuration"        
-        
+            throw
+            
         }
         finally
         {
@@ -352,11 +349,7 @@ function New-TerraformConfigurationVersion {
         catch
         {
 
-            $ErrorID = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.status
-            $Message = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.detail
-            $Exception = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.title
-            
-            Write-Error -Exception $Exception -Message $Message -ErrorId $ErrorID
+            throw
 
         }
         finally
@@ -441,11 +434,7 @@ function Push-TerraformWorkspaceContent {
         catch
         {
 
-            $ErrorID = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.status
-            $Message = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.detail
-            $Exception = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.title
-            
-            Write-Error -Exception $Exception -Message $Message -ErrorId $ErrorID
+            throw
 
         }
         finally
@@ -569,11 +558,7 @@ function Push-TerraformWorkspaceVariable {
             catch
             {
 
-                $ErrorID = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.status
-                $Message = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.detail
-                $Exception = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.title
-
-                Write-Host "$($MyInvocation.MyCommand.Name): $Message"
+                throw
 
             }
             finally
@@ -762,11 +747,7 @@ function Add-TerraformWorkspaceRun {
         catch
         {
 
-            $ErrorID = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.status
-            $Message = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.detail
-            $Exception = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.title
-            
-            Write-Error -Exception $Exception -Message $Message -ErrorId $ErrorID
+            throw
 
         }
         finally
@@ -868,11 +849,7 @@ function Watch-TerraformWorkspaceRun {
         catch
         {
 
-            $ErrorID = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.status
-            $Message = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.detail
-            $Exception = ($Error[0].ErrorDetails.Message | ConvertFrom-Json).errors.title
-
-            Write-Error -Exception $Exception -Message $Message -ErrorId $ErrorID
+            throw
 
         }
         finally

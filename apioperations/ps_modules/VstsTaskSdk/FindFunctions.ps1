@@ -155,7 +155,11 @@ function Find-Match {
                             $findResults += $findPath
                         }
                     } else {
+<<<<<<< HEAD
                         $findResults = Get-FindResult -Path $findPath -Options $FindOptions
+=======
+                        $findResults = @( Get-FindResult -Path $findPath -Options $FindOptions )
+>>>>>>> f629cde3f3bce3ea2e088bd30f15be70ed21d34a
                     }
 
                     Write-Verbose "Found $($findResults.Count) paths."

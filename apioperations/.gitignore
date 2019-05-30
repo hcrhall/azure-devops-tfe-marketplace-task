@@ -1,3 +1,7 @@
 node_modules 
 test.ps1
+<<<<<<< HEAD
 .taskkey
+=======
+.taskkey
+>>>>>>> f629cde3f3bce3ea2e088bd30f15be70ed21d34a

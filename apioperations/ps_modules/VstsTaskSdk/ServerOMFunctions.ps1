@@ -9,11 +9,7 @@ Only a subset of the referenced assemblies may actually be required, depending o
 
 Walks an assembly's references to determine all of it's dependencies. Also walks the references of the dependencies, and so on until all nested dependencies have been traversed. Dependencies are searched for in the directory of the specified assembly. NET Framework assemblies are omitted.
 
-<<<<<<< HEAD
 See https://github.com/Microsoft/vsts-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
-=======
-See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
->>>>>>> f629cde3f3bce3ea2e088bd30f15be70ed21d34a
 
 .PARAMETER LiteralPath
 Assembly to walk.
